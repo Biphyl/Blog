@@ -62,3 +62,4 @@ def new_blog():
 
     title = 'New Blog'
     return render_template('new_blog.html', title = title, blog_form = blog_form)
+
