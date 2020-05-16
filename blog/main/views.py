@@ -110,3 +110,9 @@ def delete_blog(id):
     return redirect(url_for('main.home'))
     
     return render_template('blogs.html', id=id, blog = blog)
+
+@main.route('/blogs/latest', methods = ['GET','POST'])
+def latest_blogs():
+    blogs = Blog.query.order_by(Blog.posted.desc()).all()
+
+    return render_template('latest_blog.html',blogs = blogs)
