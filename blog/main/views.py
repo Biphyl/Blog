@@ -17,6 +17,15 @@ def home():
     posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
     return render_template('home.html', posts=posts)
 
+@main.route('/user/<uname>')
+def profile(uname):
+    user = User.query.filter_by(username = uname).first()
+
+    if user is None:
+        abort(404)
+
+    return render_template("profile/profile.html", user = user)
+
 @main.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
@@ -36,3 +45,20 @@ def account():
     image_file = url_for('static', filename='photos/' + current_user.image_file)
     return render_template('account.html', title='Account',
                            image_file=image_file, form=form)
+
+@main.route('/new-blog', methods = ['GET','POST'])
+@login_required
+def new_blog():
+    blog_form = BlogForm()
+    if blog_form.validate_on_submit():
+        title = blog_form.title.data
+        blog = blog_form.blog_body.data
+        category = blog_form.blog_category.data
+
+        new_blog = Blog(title = title, content = blog, category = category,user = current_user)
+        new_blog.save_blog()
+
+        return redirect(url_for('main.index'))
+
+    title = 'New Blog'
+    return render_template('new_blog.html', title = title, blog_form = blog_form)
