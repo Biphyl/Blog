@@ -3,18 +3,23 @@ from . import main
 from blog.models import Role, Blog, Comment, Subscriber
 from .forms import UpdateProfile, CommentForm, BlogForm, SubscribeForm
 from flask_login import  login_required, current_user
-import json
-
+from wtforms import Form
+from blog import db
 
 
 @main.route("/")
 @main.route("/home")
 def home():
-    # random = request.get('http://quotes.stormconsultancy.co.uk/random.json').json()
+    random = request.args.get('http://quotes.stormconsultancy.co.uk/random.json')
     
-    blog = Blog.get_blogs('Blog')
+    sports = Blog.get_blogs('Sports-Blog')
+    travel = Blog.get_blogs('Travel-Blog')
+    fitness = Blog.get_blogs('Fitness-Blog')
+    fashion = Blog.get_blogs('Fashion-Blog')
+    food = Blog.get_blogs('Food-Blog')
+    politics = Blog.get_blogs('Political-Blog')
 
-    return render_template('home.html', blog = blog)
+    return render_template('home.html', sports = sports, travel = travel, fitness = fitness, fashion = fashion, food = food, random = random)
 @main.route('/user/<uname>')
 def profile(uname):
     user = User.query.filter_by(username = uname).first()
@@ -108,6 +113,43 @@ def delete_blog(id):
     return redirect(url_for('main.home'))
     
     return render_template('blogs.html', id=id, blog = blog)
+
+@main.route('/blogs/sports')
+def sports():
+    blogs = Blog.get_blogs('Sports-Blog')
+
+    return render_template('sports.html',blogs = blogs)
+
+@main.route('/blogs/travel')
+def travel():
+    blogs = Blog.get_blogs('Travel-Blog')
+
+    return render_template('travel.html',blogs = blogs)
+
+
+@main.route('/blogs/fitness')
+def fitness():
+    blogs = Blog.get_blogs('Fitness-Blog')
+
+    return render_template('fitness.html',blogs = blogs)
+
+@main.route('/blogs/fashion')
+def fashion():
+    blogs = Blog.get_blogs('Fashion-Blog')
+
+    return render_template('fashion.html',blogs = blogs)
+
+@main.route('/blogs/food')
+def food():
+    blogs = Blog.get_blogs('Food-Blog')
+
+    return render_template('food.html',blogs = blogs)
+
+@main.route('/blogs/politics')
+def politics():
+    blogs = Blog.get_blogs('Political-Blog')
+
+    return render_template('politics.html',blogs = blogs)
 
 @main.route('/blogs/latest', methods = ['GET','POST'])
 def latest_blogs():

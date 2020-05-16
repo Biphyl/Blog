@@ -8,7 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="../static/styles.css">
 
     {% if title %}
         <title>Flask Blog - {{ title }}</title>
@@ -34,14 +34,6 @@
           {% endwith %}
           {% block content %}{% endblock %}
         </div>
-        <div class="col-md-4">
-          <div class="content-section">
-            <h3>Wise Quotes</h3>
-            <p>{{quotes.quote}}</p><br>
-            <p> {{quotes.author|capitalize}}</p>
-          </div>
-        </div>
-      </div>
     </main>
 
 
