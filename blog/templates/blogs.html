@@ -1,0 +1,65 @@
+{% extends 'base.html'%}
+{% import 'macros.html' as macro%}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content%}
+<div class="container-fluid">
+    <div class="card text-center" style="max-width: 95rem;">
+        <div class="card-header">
+            <h3>| Full Blog Post |</h3>
+        </div>
+        <div class="card-body">
+            <h4>{{blog.title}}</h4>
+            <p>{{blog.content}}</p>
+            {% if current_user.is_authenticated %}
+            <a href="{{url_for('main.update_blog',id=blog.id)}}" class="btn btn-primary">| Update Blog |</a>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteBlogModal">| Delete
+                Blog |</button>
+            {% endif %}
+        </div>
+        <div class="card-footer text-muted">
+            Created on <strong>{{date}}</strong> by <strong>{{blog.user.username}}</strong>
+        </div>
+    </div>
+
+
+    <div class="cmm">
+
+
+        <h5><strong>Leave Your Comments Below</strong></h5>
+        {{wtf.quick_form(comment_form)}}
+
+
+    </div>
+
+    <div class="modal fade right" id="deleteBlogModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+
+        <div class="modal-dialog modal-side modal-top-right" role="document">
+
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title w-100" id="myModalLabel">Delete</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    <form action="{{url_for('main.delete_blog',id=blog.id)}}" method="POST">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        {{macro.displayComments(comments)}}
+    </div>
+</div>
+{% endblock%}

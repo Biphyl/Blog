@@ -80,4 +80,4 @@ def blog(id):
         return redirect(url_for('main.blog',id=id))
     
     comments = Comment.get_comments(blog)
-    return render_template('full_blog.html', blog = blog, comment_form = comment_form, comments = comments, date = posted_date)
+    return render_template('blogs.html', blog = blog, comment_form = comment_form, comments = comments, date = posted_date)
