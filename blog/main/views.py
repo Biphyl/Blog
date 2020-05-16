@@ -116,3 +116,17 @@ def latest_blogs():
     blogs = Blog.query.order_by(Blog.posted.desc()).all()
 
     return render_template('latest_blog.html',blogs = blogs)
+
+@main.route('/subscription',methods=['GET','POST'])
+def subscription():
+    subscription_form = SubscribeForm()
+
+    if subscription_form.validate_on_submit():
+        new_subscriber = Subscriber(subscriber_name=subscription_form.subscriber_name.data,subscriber_email=subscription_form.subscriber_email.data)
+
+        db.session.add(new_subscriber)
+        db.session.commit()
+
+        return redirect(url_for('main.home'))    
+
+    return render_template('subscription.html',subscription_form = subscription_form)
