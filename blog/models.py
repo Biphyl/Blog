@@ -3,42 +3,60 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask import current_app
 from blog import db
 
-class User(db.Model):
+class User(UserMixin,db.Model):
     __tablename__ = 'users'
 
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
-    password = db.Column(db.String(60), nullable=False)
-    posts = db.relationship('Post', backref='author', lazy=True)
+    id = db.Column(db.Integer,primary_key = True)
+    username = db.Column(db.String(100))
+    email = db.Column(db.String(255),unique = True, index = True)
+    bio = db.Column(db.String(255))
+    profile_pic_path = db.Column(db.String())
+    password_hash = db.Column(db.String(255))
+    role_id = db.Column(db.Integer,db.ForeignKey('roles.id'))
 
-    def get_reset_token(self, expires_sec=1800):
-        s = Serializer(current_app.config['SECRET_KEY'], expires_sec)
-        return s.dumps({'user_id': self.id}).decode('utf-8')
+    blogs = db.relationship('Blog',backref = 'user', lazy = 'dynamic')
+    comments = db.relationship('Comment',backref = 'user', lazy = 'dynamic')
 
-    @staticmethod
-    def verify_reset_token(token):
-        s = Serializer(current_app.config['SECRET_KEY'])
-        try:
-            user_id = s.loads(token)['user_id']
-        except:
-            return None
-        return User.query.get(user_id)
+    @property
+    def password(self):
+        raise AttributeError('You cannot read the password attritube')
 
-    def __repr__(self):
-        return f"User('{self.username}', '{self.email}', '{self.image_file}')"
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
 
-
-class Post(db.Model):
-    __tablename__ = 'posts'
-
-    
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    content = db.Column(db.Text, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    def verify_password(self,password):
+        return check_password_hash(self.password_hash,password)
 
     def __repr__(self):
-        return f"Post('{self.title}', '{self.date_posted}')"
+        return f'User {self.username}'
+
+
+class Blog(db.Model):
+    __tablename__ = 'blogs'
+    id = db.Column(db.Integer,primary_key = True)
+    title = db.Column(db.String)
+    content = db.Column(db.String(1000))
+    category = db.Column(db.String(), nullable = False)
+    posted = db.Column(db.DateTime,default=datetime.utcnow)
+    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+
+    comments = db.relationship('Comment',backref =  'blogit',lazy = "dynamic")
+
+    def save_blog(self):
+        db.session.add(self)
+        db.session.commit()
+
+    @classmethod
+    def get_blogs(cls,category):
+        blogs = Blog.query.filter_by(category = category).all()
+        return blogs
+
+    @classmethod
+    def get_blog(cls,id):
+        blog = Blog.query.filter_by(id = id).first()
+
+        return blog
+
+    def __repr__(self):
+        return f'Blog {self.title}'
