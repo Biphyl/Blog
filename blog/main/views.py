@@ -58,7 +58,7 @@ def new_blog():
         new_blog = Blog(title = title, content = blog, category = category,user = current_user)
         new_blog.save_blog()
 
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.home'))
 
     title = 'New Blog'
     return render_template('new_blog.html', title = title, blog_form = blog_form)
@@ -98,3 +98,15 @@ def update_blog(id):
         form.blog_body.data = blog.content
         form.blog_category.data = blog.category
     return render_template('new_blog.html', blog_form = form, id=id)
+
+@main.route('/blog/delete/<int:id>', methods = ['GET', 'POST'])
+@login_required
+def delete_blog(id):
+    blog = Blog.get_blog(id)
+    db.session.delete(blog)
+    db.session.commit()
+
+    flash('Blog has been deleted')
+    return redirect(url_for('main.home'))
+    
+    return render_template('blogs.html', id=id, blog = blog)
