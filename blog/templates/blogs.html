@@ -21,11 +21,7 @@
             Created on <strong>{{date}}</strong> by <strong>{{blog.user.username}}</strong>
         </div>
     </div>
-
-
     <div class="cmm">
-
-
         <h5><strong>Leave Your Comments Below</strong></h5>
         {{wtf.quick_form(comment_form)}}
 
@@ -34,10 +30,7 @@
 
     <div class="modal fade right" id="deleteBlogModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true">
-
         <div class="modal-dialog modal-side modal-top-right" role="document">
-
-
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title w-100" id="myModalLabel">Delete</h4>
@@ -57,7 +50,6 @@
             </div>
         </div>
     </div>
-
     <div class="row">
         {{macro.displayComments(comments)}}
     </div>

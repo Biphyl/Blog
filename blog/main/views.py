@@ -109,7 +109,7 @@ def delete_blog(id):
     db.session.delete(blog)
     db.session.commit()
 
-    flash('Blog has been deleted')
+    flash('Your blog has been deleted')
     return redirect(url_for('main.home'))
     
     return render_template('blogs.html', id=id, blog = blog)
