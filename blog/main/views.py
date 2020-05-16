@@ -63,3 +63,21 @@ def new_blog():
     title = 'New Blog'
     return render_template('new_blog.html', title = title, blog_form = blog_form)
 
+@main.route('/blog/<int:id>', methods = ["GET","POST"])
+def blog(id):
+    blog = Blog.get_blog(id)
+    posted_date = blog.posted.strftime('%b %d, %Y')
+
+    comment_form = CommentForm()
+    if comment_form.validate_on_submit():
+
+        name = comment_form.name.data
+        comment = comment_form.comment.data
+
+        new_comment = Comment(name = name, comment = comment, blogit = blog)
+        new_comment.save_comment()
+
+        return redirect(url_for('main.blog',id=id))
+    
+    comments = Comment.get_comments(blog)
+    return render_template('full_blog.html', blog = blog, comment_form = comment_form, comments = comments, date = posted_date)
