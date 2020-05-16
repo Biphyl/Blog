@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macro%}
+{% block content %}
+    <div class="container-fluid quotes .bg-teal .bg-darken-2">
+        <div class="col-md-12" style="font-size: 15px;font-family: Balsamiq Sans;">
+            <h4 class="card-header text-center">| Quotes |</h4>
+            <p class="card-header text-center">"{{random.quote}}"</p>
+            <p class="card-header text-center"><strong>| Author: {{random.author}} |</strong></p>
+        </div>
+    </div>
+    {% for alert in get_flashed_messages() %}
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ alert }}
+        </div>
+    {% endfor %}
+    {% for post in posts.items %}
+        <article class="media content-section">
+          <img class="rounded-circle article-img" src="{{ url_for('static', filename='profile_pics/' + post.author.image_file) }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{{ url_for('users.user_posts', username=post.author.username) }}">{{ post.author.username }}</a>
+              <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>
+            </div>
+            <h2><a class="article-title" href="{{ url_for('posts.post', post_id=post.id) }}">{{ post.title }}</a></h2>
+            <p class="article-content">{{ post.content }}</p>
+          </div>
+        </article>
+    {% endfor %}
+    <footer class="page-footer font-small unique-color-dark pt-4">
+        <div class="container">
+            <ul class="list-unstyled list-inline text-center py-2">
+                <li class="list-inline-item">
+                    <h5 class="mb-1">| Subscribe to our newsletter |</h5>
+                </li>
+                <li class="list-inline-item">
+                    <a href="/subscription" class="btn btn-outline-secondary waves-effect">| SUBSCRIBE |</a>
+                </li>
+            </ul>
+        </div>
+        <div class="footer-copyright text-center py-3">|© 2020 Copyright|
+            <a href="https://mdbootstrap.com/education/bootstrap/">| Blogger Inc. |</a>
+        </div>
+    </footer>
+{% endblock%}
