@@ -86,3 +86,10 @@ class Comment(db.Model):
 
     def __repr__(self):
         return f'Comment{self.comment}'
+
+
+class Subscriber(db.Model):
+    __tablename__ = 'subscribers'
+    id = db.Column(db.Integer,primary_key = True)
+    subscriber_name = db.Column(db.String(50))
+    subscriber_email = db.Column(db.String(255), unique = True)
