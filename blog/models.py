@@ -1,5 +1,5 @@
 from datetime import datetime
-from werkzeug.security import generate_password_hash, check_password_hash
+# from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from flask_login import UserMixin
 from blog import db
@@ -33,8 +33,19 @@ class User(UserMixin,db.Model):
         return f'User {self.username}'
 
 
+class Role(db.Model):
+    __tablename__ = 'roles'
+
+    id = db.Column(db.Integer,primary_key = True)
+    name = db.Column(db.String(255))
+    users = db.relationship('User',backref = 'role',lazy="dynamic")
+
+    def __repr__(self):
+        return f'User {self.name}'
+
 class Blog(db.Model):
     __tablename__ = 'blogs'
+
     id = db.Column(db.Integer,primary_key = True)
     title = db.Column(db.String)
     content = db.Column(db.String(1000))
@@ -64,6 +75,7 @@ class Blog(db.Model):
 
 class Comment(db.Model):
     __tablename__ = 'comments'
+
     id = db.Column(db.Integer,primary_key = True)
     comment = db.Column(db.String(1000))
     name = db.Column(db.String)
@@ -91,6 +103,7 @@ class Comment(db.Model):
 
 class Subscriber(db.Model):
     __tablename__ = 'subscribers'
+
     id = db.Column(db.Integer,primary_key = True)
     subscriber_name = db.Column(db.String(50))
     subscriber_email = db.Column(db.String(255), unique = True)

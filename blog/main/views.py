@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, flash, abort
 from . import main
-from blog.models import Post, Blog, Comment, Subscriber
+from blog.models import Role, Blog, Comment, Subscriber
 from .forms import UpdateProfile, CommentForm, BlogForm, SubscribeForm
 from flask_login import  login_required, current_user
 import json
@@ -10,13 +10,11 @@ import json
 @main.route("/")
 @main.route("/home")
 def home():
+    # random = request.get('http://quotes.stormconsultancy.co.uk/random.json').json()
+    
+    blog = Blog.get_blogs('Blog')
 
-    random = request.get('http://quotes.stormconsultancy.co.uk/random.json').json
-
-    page = request.args.get('page', 1, type=int)
-    posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page, per_page=5)
-    return render_template('home.html', posts=posts)
-
+    return render_template('home.html', blog = blog)
 @main.route('/user/<uname>')
 def profile(uname):
     user = User.query.filter_by(username = uname).first()

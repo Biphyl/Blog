@@ -1,0 +1,60 @@
+{% macro displayBlogs(my_blog_list) %}
+    {% for blogs in my_blog_list %}
+    
+    <div class="card border-info mb-3 spacing" style="min-width: 20rem;max-width: 20rem;">
+            <div class="card-body">
+              <h4 class="card-title">{{blogs.title}}</h4>
+              <p class="card-text">{{blogs.content| truncate(100)}}</p>
+              <p>Posted By: <strong>{{blogs.user.username}}</strong></p>
+              <p>Date posted {{blogs.posted.strftime('%Y-%m-%d')}}</p>
+              <a href="/blog/{{blogs.id}}" class="card-link btn btn-success float-right">Full Blog</a>
+            </div>
+          </div>
+       
+    {% endfor %}
+{% endmacro%}
+
+{% macro displayComments(my_comments) %}
+   {% for comments in my_comments %}
+   <div class="card border-dark comment" style="min-width: 20rem;max-width: 20rem;">
+      <div class="card-header">Comments</div>
+      <div class="card-body text-dark">
+        <h5 class="card-title">{{comments.name}}</h5>
+        <p class="card-text">{{comments.comment}}</p>        
+      </div>
+      
+      <div class="card-footer bg-transparent">
+        <div >
+            <button class="btn btn-danger float-right" data-toggle="modal" data-target="#deleteModalRight">Delete</button> 
+        </div>
+      </div>
+    
+    </div>
+<div class="modal fade" id="deleteModalRight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+aria-hidden="true">
+
+<div class="modal-dialog modal-sm modal-top" role="document">
+
+
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title w-100" id="myModalLabel">Delete Comment</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        Confirm you want to delete this comment
+    </div>
+    <div class="modal-footer justify-content-center">
+      <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      <form action="{{url_for('main.delete_comment',id=comments.id)}}" method="POST">
+          <button type="submit" class="btn btn-danger">Delete</button>
+      </form>      
+    </div>
+  </div>
+</div>
+</div>
+   {% endfor %}
+{% endmacro %}
+
