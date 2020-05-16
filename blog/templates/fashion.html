@@ -1,0 +1,34 @@
+
+{% extends 'base.html' %}
+{% import 'macros.html' as macro %}
+
+{%block content%}
+<!-- Jumbotron -->
+<div class="jumbotron text-center mdb-color lighten-2 white-text mx-2 mb-5">
+
+        <!-- Title -->
+        <h2 class="card-title h2">Latest Fashion Trends Blogs</h2>      
+      
+        <hr class="my-4 rgba-white-light">   
+      
+      </div>
+      <!-- Jumbotron -->
+      <div class="row">
+          <div class="col-md-5"></div>
+          <div class="col-md-6">
+         {% if current_user.is_authenticated %}
+          <h4 class="text-center bg-light mb-3 btn "><a href="{{url_for('main.new_blog')}}">Create Your Blog</a></h4>
+         {% endif%}
+        </div>
+         
+      </div>
+<div class="container-fluid">
+  <div class="row">
+    {{macro.displayBlogs(blogs)}}
+  </div>
+</div>
+{%endblock%}
+
+
+
+
