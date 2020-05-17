@@ -5,13 +5,14 @@ from .forms import UpdateProfile, CommentForm, BlogForm, SubscribeForm
 from flask_login import  login_required, current_user
 from wtforms import Form
 from blog import db
+from blog.requests import get_Quotes
 
 
 @main.route("/")
 @main.route("/home")
 def home():
-    random = request.args.get('http://quotes.stormconsultancy.co.uk/random.json')
-    
+    quotes=get_Quotes()
+    print(quotes)
     sports = Blog.get_blogs('Sports-Blog')
     travel = Blog.get_blogs('Travel-Blog')
     fitness = Blog.get_blogs('Fitness-Blog')
@@ -19,7 +20,7 @@ def home():
     food = Blog.get_blogs('Food-Blog')
     politics = Blog.get_blogs('Political-Blog')
 
-    return render_template('home.html', sports = sports, travel = travel, fitness = fitness, fashion = fashion, food = food, random = random)
+    return render_template('home.html', sports = sports, travel = travel, fitness = fitness, fashion = fashion, food = food, quotes = quotes)
 @main.route('/user/<username>')
 def profile(username):
     user = User

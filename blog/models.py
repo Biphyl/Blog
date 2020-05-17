@@ -112,3 +112,9 @@ class Subscriber(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     subscriber_name = db.Column(db.String(50))
     subscriber_email = db.Column(db.String(255), unique = True)
+
+class Quotes:
+  def __init__ (self,author,quote):
+    self.author = author
+    self.quote = quote
+    
