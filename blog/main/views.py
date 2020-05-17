@@ -1,8 +1,8 @@
 from flask import render_template, request, redirect, url_for, flash, abort
 from . import main
-from blog.models import Role, Blog, Comment, Subscriber
+from blog.models import Role, Blog, Comment, Subscriber, User
 from .forms import UpdateProfile, CommentForm, BlogForm, SubscribeForm
-from flask_login import  login_required, current_user
+from flask_login import login_required, current_user
 from wtforms import Form
 from blog import db
 from .utils import save_picture
@@ -32,24 +32,23 @@ def profile(username):
 
     return render_template("profile/profile.html", user = user)
 
-@main.route("/account", methods=['GET', 'POST'])
+@main.route('/user/<uname>/update',methods = ['GET','POST'])
 @login_required
-def account():
-    form = UpdateProfile()
-    if form.validate_on_submit():
-        if form.picture.data:
+def update_profile(uname):
+    user = User.query.filter_by(username = uname).first()
+    if user is None:
+        abort(404)
 
-            current_user.image_file = picture_file
-        current_user.username = form.username.data
-        current_user.email = form.email.data
+    form = UpdateProfile()
+
+    if form.validate_on_submit():
+        user.bio = form.bio.data
+
+        db.session.add(user)
         db.session.commit()
-        flash('Your account has been updated!', 'success')
-        return redirect(url_for('users.account'))
-    elif request.method == 'GET':
-        form.username.data = current_user.username
-        form.email.data = current_user.email
-    image_file = url_for('static', filename='photos/' + current_user.image_file)
-    return render_template('profile/account.html', title='Account',
+
+        return redirect(url_for('.profile',uname=user.username))
+    return render_template('profile/profile.html', title='Account',
                             form=form)
 
 @main.route('/new-blog', methods = ['GET','POST'])

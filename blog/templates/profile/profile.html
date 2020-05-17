@@ -11,12 +11,7 @@
         <img src="{{url_for('static',filename = 'photos/Avatar.png')}}" alt="" class="img-thumbnail">
         {% endif %}
         
-        {% if user == current_user %}
-        <form action="{{url_for('main.update_pic',uname=user.username)}}" method="post" enctype="multipart/form-data">
-            <input type="file" name="photo" class="form-control" required>
-            <input type="submit">
-        </form>
-        {% endif %}
+
     </div>
     <div class="col-md-7">
         <h4>Bio Information</h4>
@@ -26,7 +21,7 @@
         <p>{{user.username}} has no bio</p>
         {% endif %}
         {% if user == current_user %}
-        <a href="{{url_for('main.update_profile',uname=user.username)}}">Edit Bio</a><br>
+        <a href="{{url_for('main.account',uname=user.username)}}">Edit Bio</a><br>
         {% endif %}
     </div>
     </div>
