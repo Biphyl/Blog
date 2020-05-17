@@ -1,5 +1,5 @@
 import unittest
-from app.models import User
+from blog.models import User
 
 class UserModelTest(unittest.TestCase):
 

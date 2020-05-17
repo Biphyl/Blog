@@ -1,6 +1,6 @@
 import unittest
-from app.models import Blog,Comment
-from app import db
+from blog.models import Blog,Comment
+from blog import db
 from datetime import datetime
 
 class CommentsTest(unittest.TestCase):

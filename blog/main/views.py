@@ -5,6 +5,7 @@ from .forms import UpdateProfile, CommentForm, BlogForm, SubscribeForm
 from flask_login import  login_required, current_user
 from wtforms import Form
 from blog import db
+from .utils import save_picture
 from blog.requests import get_Quotes
 
 
@@ -37,7 +38,7 @@ def account():
     form = UpdateProfile()
     if form.validate_on_submit():
         if form.picture.data:
-            picture_file = save_picture(form.picture.data)
+
             current_user.image_file = picture_file
         current_user.username = form.username.data
         current_user.email = form.email.data
@@ -48,8 +49,8 @@ def account():
         form.username.data = current_user.username
         form.email.data = current_user.email
     image_file = url_for('static', filename='photos/' + current_user.image_file)
-    return render_template('account.html', title='Account',
-                           image_file=image_file, form=form)
+    return render_template('profile/account.html', title='Account',
+                            form=form)
 
 @main.route('/new-blog', methods = ['GET','POST'])
 @login_required
