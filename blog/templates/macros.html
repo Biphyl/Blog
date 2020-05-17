@@ -3,9 +3,9 @@
     
     <div class="card border-info mb-3 spacing" style="min-width: 20rem;max-width: 20rem;">
             <div class="card-body">
-              <h4 class="card-title">{{blogs.title}}</h4>
-              <p class="card-text">{{blogs.content| truncate(100)}}</p>
-              <p>Posted By: <strong>{{blogs.user.username}}</strong></p>
+              <h4 class="card-title" style="font-family: 'Oswald', sans-serif;">{{blogs.title}}</h4>
+              <p class="card-text" style="font-family: 'Oswald', sans-serif;">{{blogs.content| truncate(100)}}</p>
+              <p style="font-family: 'Oswald', sans-serif;">Posted By: <strong>{{blogs.user.username}}</strong></p>
               <p>Date posted {{blogs.posted.strftime('%Y-%m-%d')}}</p>
               <a href="/blog/{{blogs.id}}" class="card-link btn btn-success float-right">Full Blog</a>
             </div>
@@ -19,8 +19,8 @@
    <div class="card border-dark comment" style="min-width: 20rem;max-width: 20rem;">
       <div class="card-header">Comments</div>
       <div class="card-body text-dark">
-        <h5 class="card-title">{{comments.name}}</h5>
-        <p class="card-text">{{comments.comment}}</p>        
+        <h5 class="card-title" style="font-family: 'Oswald', sans-serif;">{{comments.name}}</h5>
+        <p class="card-text" style="font-family: 'Oswald', sans-serif;">{{comments.comment}}</p>        
       </div>
       
       <div class="card-footer bg-transparent">

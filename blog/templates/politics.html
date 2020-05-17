@@ -5,7 +5,7 @@
 <div class="jumbotron text-center mdb-color lighten-2 white-text mx-2 mb-5">
 
       
-        <h2 class="card-title h2">Only the best and most popular Politics blogs</h2>      
+        <h2 class="card-title h2" style="font-family: 'Oswald', sans-serif;">Only the best and most trending Political blogs</h2>      
       
         <hr class="my-4 rgba-white-light">   
       
@@ -15,13 +15,13 @@
           <div class="col-md-5"></div>
           <div class="col-md-6">
          {% if current_user.is_authenticated %}
-          <h4 class="text-center btn bg-light mb-3"><a href="{{url_for('main.new_blog')}}">| Create Your Blog |</a></h4>
+          <h4 class="text-center btn bg-light mb-3"><a href="{{url_for('main.new_blog')}}" style="font-family: 'Oswald', sans-serif;">| Create Your Blog |</a></h4>
          {% endif%}
         </div>
          
       </div>
 <div class="container-fluid">
-  <div class="row">
+  <div class="row" style="font-family: 'Oswald', sans-serif;">
     {{macro.displayBlogs(blogs)}}
   </div>
 </div>

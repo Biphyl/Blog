@@ -5,6 +5,8 @@ class Config:
     SECRET_KEY = 'Lovine'
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://biron:Biron4745@localhost/blogs'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    MAIL_USERNAME = os.environ.get('EMAIL_USER')
+    MAIL_PASSWORD = os.environ.get('EMAIL_PASS')
 
 
 
@@ -19,7 +21,8 @@ class DevConfig(Config):
 class ProdConfig(Config):
 
     SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://biron:Biron4745@localhost/blogs'
-
+class TestConfig(Config):
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://biron:Biron4745@localhost/blogs'
 
 config_options = {
 'development':DevConfig,
