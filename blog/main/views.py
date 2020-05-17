@@ -20,9 +20,10 @@ def home():
     politics = Blog.get_blogs('Political-Blog')
 
     return render_template('home.html', sports = sports, travel = travel, fitness = fitness, fashion = fashion, food = food, random = random)
-@main.route('/user/<uname>')
-def profile(uname):
-    user = User.query.filter_by(username = uname).first()
+@main.route('/user/<username>')
+def profile(username):
+    user = User
+    user = User.query.filter_by(username = username).first()
 
     if user is None:
         abort(404)
@@ -32,7 +33,7 @@ def profile(uname):
 @main.route("/account", methods=['GET', 'POST'])
 @login_required
 def account():
-    form = UpdateAccountForm()
+    form = UpdateProfile()
     if form.validate_on_submit():
         if form.picture.data:
             picture_file = save_picture(form.picture.data)
@@ -113,6 +114,16 @@ def delete_blog(id):
     return redirect(url_for('main.home'))
     
     return render_template('blogs.html', id=id, blog = blog)
+
+@main.route('/blog/comment/delete/<int:id>', methods = ['GET', 'POST'])
+@login_required
+def delete_comment(id):
+    comment = Comment.query.filter_by(id=id).first()
+    blog_id = comment.blog
+    Comment.delete_comment(id)
+
+    flash('Comment has been deleted')
+    return redirect(url_for('main.blog',id=blog_id))
 
 @main.route('/blogs/sports')
 def sports():
