@@ -5,7 +5,6 @@ from .forms import UpdateProfile, CommentForm, BlogForm, SubscribeForm
 from flask_login import login_required, current_user
 from wtforms import Form
 from blog import db
-from .utils import save_picture
 from blog.requests import get_Quotes
 
 
