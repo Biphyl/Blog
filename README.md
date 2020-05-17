@@ -1,6 +1,6 @@
 # BLOG POST
 
-This ia an application that allows a user to write blog posts and then they can get comments from the blog they posted
+This ia an application that allows a user to view other peoples blogs in the different categories or you can also create your own blog. You can also comment on other peoples blogs
 
 ## Author
 
@@ -8,8 +8,12 @@ Biron Otieno Odhiambo
 
 ## Behaviour Driven Development(BDD)
 
-Sign Up for an account and then write your pitch down
-View other peoples pitches and vote and add comments
+1. As a User you can create account then log in with the same credentials
+2. As a User you can check the latests blogs according to your desired category
+3. As a User you can create your own blog in the categories listed
+4. As a User you can comment on other peoples blog
+5. As a writer you can be able to update or delete the blog you have posted
+6. As a writer you can be able to delete any comment that you find insulting in your blog
 
 ## Installation
 
@@ -19,7 +23,7 @@ Step to view this application :
 
 2. Open the repo using your preffered text editor e.g vscode.
 
-3. Run the test file to confirm that all the test passes.
+3. Run the test file to confirm that all the tests passes.
 
 4. Run the main file to view how the application runs.
 
