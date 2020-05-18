@@ -3,7 +3,7 @@ import os
 class Config:
 
     SECRET_KEY = 'Lovine'
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2:/biron:Biron4745@localhost/blogs'
+    SQLALCHEMY_DATABASE_URI = os.environ('DATABASE_URL')
     QUOTES_API = 'http://quotes.stormconsultancy.co.uk/random.json'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     MAIL_USERNAME = os.environ.get('EMAIL_USER')
