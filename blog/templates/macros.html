@@ -16,7 +16,6 @@
 
 {% macro displayComments(my_comments) %}
    {% for comments in my_comments %}
-   {% if post.auth %}
    <div class="card border-dark comment" style="min-width: 20rem;max-width: 20rem;">
       <div class="card-header">Comments</div>
       <div class="card-body text-dark">
