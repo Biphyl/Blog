@@ -117,7 +117,7 @@ def delete_blog(id):
 
 @main.route('/blog/comment/delete/<int:id>', methods = ['GET', 'POST'])
 @login_required
-def delete_comment(id):
+def delete_comment(id): 
     comment = Comment.query.filter_by(id=id).first()
     blog_id = comment.blog
     Comment.delete_comment(id)
