@@ -52,7 +52,7 @@ class Blog(db.Model):
 
     id = db.Column(db.Integer,primary_key = True)
     title = db.Column(db.String)
-    content = db.Column(db.String(1000))
+    content = db.Column(db.String(10000))
     category = db.Column(db.String(), nullable = False)
     posted = db.Column(db.DateTime,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))

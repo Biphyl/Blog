@@ -9,7 +9,7 @@
             <h3>| Full Blog Post |</h3>
         </div>
         <div class="card-body">
-            <h4>{{blog.title}}</h4>
+            <h4><strong>{{blog.title}}</strong></h4>
             <p style="font-family: 'Oswald', sans-serif;">{{blog.content}}</p>
             {% if current_user.is_authenticated %}
             <a href="{{url_for('main.update_blog',id=blog.id)}}" class="btn btn-primary">| Update Blog |</a>
